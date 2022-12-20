@@ -1,8 +1,5 @@
 import React from 'react';
 import { Route, Routes, Link, Outlet } from 'react-router-dom';
-import Add from './Add';
-import Edit from './Edit';
-import Home from './Home';
 
 const Navbar = () => {
   return (
@@ -16,9 +13,6 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <Outlet />
-
-    
     </div>
   );
 };
