@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = [
   { id: '1', name: 'Dave Patrick', email: 'dave@gmail.com' },
   { id: '2', name: 'Hank Gluhwein', email: 'hank@gmail.com' },
+  { id: '3', name: 'Hank Gluhwein', email: 'hank@gmail.com' },
 ];
-
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -20,8 +20,15 @@ const usersSlice = createSlice({
         existingUser.email = email;
       }
     },
+    userDeleted(state, action) {
+      const { id } = action.payload;
+      const existingUser = state.entities.find((user) => user.id === id);
+      if (existingUser) {
+        state.entities = state.entities.filter((user) => user.id !== id);
+      }
+    },
   },
 });
 
-export const { userAdded } = usersSlice.actions;
+export const { userAdded, userUpdated, userDeleted } = usersSlice.actions;
 export default usersSlice.reducer;

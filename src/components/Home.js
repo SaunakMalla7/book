@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'react-bootstrap';
+import { userDeleted } from '../features/users/usersSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
+
+  const handleDelete = (id) => {
+    dispatch(userDeleted({ id }));
+  };
   return (
     <div className="container">
       <div className="row">
@@ -17,15 +23,26 @@ const Home = () => {
           </Link>
           <div className="col-md-10 mx-auto my-4">
             <Table className="table  ">
-              <tbody className="table-header bg-dark text-white">
+              <tbody className="table-0 header bg-dark text-white">
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+
                 {users.map(({ id, name, email }, i) => (
                   <tr key={i}>
                     <td>{id}</td>
                     <td>{name}</td>
                     <td>{email}</td>
                     <td>
-                      <button>Delete</button>
-                      <button>Edit</button>
+                      <Link to={`/edit/${id}`}>
+                        <button className="btn btn-sm btn-primary mr-1">
+                          Edit
+                        </button>
+                      </Link>
+                      <button onClick={() => handleDelete(id)}>Delete</button>
                     </td>
                   </tr>
                 ))}
